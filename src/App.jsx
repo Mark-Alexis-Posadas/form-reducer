@@ -139,7 +139,11 @@ export default function App() {
           <div key={d.id} className="mb-4">
             {d.options ? (
               <>
-                <label>{d.text}</label>
+                <label
+                  className={`${state.theme ? "text-white" : "text-black"}`}
+                >
+                  {d.text}
+                </label>
                 <div className="flex items-center">
                   {d.options.map((option) => (
                     <label
@@ -191,17 +195,27 @@ export default function App() {
         </button>
         {state.submittedData && (
           <ul className="w-full">
-            <li className="mb-3">
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
               First Name: {state.submittedData.firstName}
             </li>
-            <li className="mb-3">Last Name: {state.submittedData.lastName}</li>
-            <li className="mb-3">Email: {state.submittedData.email}</li>
-            <li className="mb-3">User Name: {state.submittedData.userName}</li>
-            <li className="mb-3">Password: {state.submittedData.password}</li>
-            <li className="mb-3">
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
+              Last Name: {state.submittedData.lastName}
+            </li>
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
+              Email: {state.submittedData.email}
+            </li>
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
+              User Name: {state.submittedData.userName}
+            </li>
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
+              Password: {state.submittedData.password}
+            </li>
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
               Confirm Password: {state.submittedData.confirmPassword}
             </li>
-            <li className="mb-3">Gender: {state.submittedData.gender}</li>
+            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
+              Gender: {state.submittedData.gender}
+            </li>
           </ul>
         )}
       </div>
