@@ -89,6 +89,42 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Basic validation checks
+    if (
+      !state.firstName ||
+      !state.lastName ||
+      !state.email ||
+      !state.userName ||
+      !state.password ||
+      !state.confirmPassword ||
+      !state.gender
+    ) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(state.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Password strength validation
+    if (state.password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+    // You can add more criteria for password strength if needed
+
+    // Password and Confirm Password match validation
+    if (state.password !== state.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    // Dispatch form submission action if validation passes
     dispatch({ type: "SUBMIT_FORM" });
   };
 
@@ -102,12 +138,18 @@ export default function App() {
         {data.map((d) => (
           <div key={d.id} className="mb-4">
             {d.options ? (
-              <div>
+              <>
                 <label>{d.text}</label>
-                <div>
+                <div className="flex items-center">
                   {d.options.map((option) => (
-                    <label key={option}>
+                    <label
+                      key={option}
+                      className={`${
+                        state.theme ? "text-white" : "text-black"
+                      } flex items-center mr-3`}
+                    >
                       <input
+                        className="bg-white border-2 border-slate-400 w-5 h-5 mr-3"
                         type="radio"
                         name={d.field}
                         value={option}
@@ -118,7 +160,7 @@ export default function App() {
                     </label>
                   ))}
                 </div>
-              </div>
+              </>
             ) : (
               <Input
                 placeholder={d.text}
