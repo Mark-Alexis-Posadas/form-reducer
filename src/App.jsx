@@ -32,6 +32,12 @@ const data = [
     text: "Confirm Password",
     field: "confirmPassword",
   },
+  {
+    id: 7,
+    text: "Gender",
+    field: "gender",
+    options: ["Male", "Female"],
+  },
 ];
 
 const initialState = {
@@ -87,19 +93,51 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-2 gap-9 p-10">
+    <div
+      className={`min-h-screen grid grid-cols-2 gap-9 p-10 ${
+        state.theme ? "bg-black" : "bg-white"
+      }`}
+    >
       <form>
         {data.map((d) => (
           <div key={d.id} className="mb-4">
-            <Input
-              placeholder={d.text}
-              name={d.field}
-              id={d.field}
-              type="text"
-              className="w-full p-2 bg-white shadow-md"
-            />
+            {d.options ? (
+              <div>
+                <label>{d.text}</label>
+                <div>
+                  {d.options.map((option) => (
+                    <label key={option}>
+                      <input
+                        type="radio"
+                        name={d.field}
+                        value={option}
+                        checked={state[d.field] === option}
+                        onChange={handleChange}
+                      />
+                      {option}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Input
+                placeholder={d.text}
+                name={d.field}
+                id={d.field}
+                type="text"
+                className="w-full p-2 bg-white shadow-md"
+                handleChange={handleChange}
+              />
+            )}
           </div>
         ))}
+
+        <button
+          onClick={handleSubmit}
+          className="bg-purple-700 text-white rounded p-2"
+        >
+          Submit
+        </button>
       </form>
 
       <div className="flex flex-col items-end">

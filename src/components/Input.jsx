@@ -5,6 +5,7 @@ export default function Input({
   placeholder,
   value,
   className,
+  handleChange,
 }) {
   return (
     <input
@@ -14,6 +15,7 @@ export default function Input({
       placeholder={placeholder}
       value={value}
       className={className}
+      onChange={handleChange}
     />
   );
 }
