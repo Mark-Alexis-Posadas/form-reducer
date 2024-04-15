@@ -135,17 +135,17 @@ export default function App() {
       }`}
     >
       <form>
-        {data.map((d) => (
-          <div key={d.id} className="mb-4">
-            {d.options ? (
+        {data.map((item) => (
+          <div key={item.id} className="mb-4">
+            {item.options ? (
               <>
                 <label
                   className={`${state.theme ? "text-white" : "text-black"}`}
                 >
-                  {d.text}
+                  {item.text}
                 </label>
                 <div className="flex items-center">
-                  {d.options.map((option) => (
+                  {item.options.map((option) => (
                     <label
                       key={option}
                       className={`${
@@ -155,9 +155,9 @@ export default function App() {
                       <input
                         className="bg-white border-2 border-slate-400 w-5 h-5 mr-3"
                         type="radio"
-                        name={d.field}
+                        name={item.field}
                         value={option}
-                        checked={state[d.field] === option}
+                        checked={state[item.field] === option}
                         onChange={handleChange}
                       />
                       {option}
@@ -167,10 +167,16 @@ export default function App() {
               </>
             ) : (
               <Input
-                placeholder={d.text}
-                name={d.field}
-                id={d.field}
-                type="text"
+                placeholder={item.text}
+                name={item.field}
+                id={item.field}
+                type={
+                  item.id === 5 || item.id === 6
+                    ? "password"
+                    : item.id === 4
+                    ? "email"
+                    : "text"
+                }
                 className="w-full p-2 bg-white shadow-md"
                 handleChange={handleChange}
               />
@@ -195,27 +201,14 @@ export default function App() {
         </button>
         {state.submittedData && (
           <ul className="w-full">
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              First Name: {state.submittedData.firstName}
-            </li>
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              Last Name: {state.submittedData.lastName}
-            </li>
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              Email: {state.submittedData.email}
-            </li>
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              User Name: {state.submittedData.userName}
-            </li>
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              Password: {state.submittedData.password}
-            </li>
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              Confirm Password: {state.submittedData.confirmPassword}
-            </li>
-            <li className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}>
-              Gender: {state.submittedData.gender}
-            </li>
+            {Object.entries(state.submittedData).map(([key, val]) => (
+              <li
+                key={key}
+                className={`mb-3 ${state.theme ? "text-white" : "text-black"}`}
+              >
+                {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${val}`}
+              </li>
+            ))}
           </ul>
         )}
       </div>
